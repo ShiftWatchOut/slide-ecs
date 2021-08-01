@@ -3,7 +3,7 @@
 theme: seriph
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: https://source.unsplash.com/collection/94734566/1920x1080
+background: https://overwatch.nosdn.127.net/1/assets/img/pages/community/heroes-among-us/header-tablet.jpg
 # apply any windi css classes to the current slide
 class: 'text-center'
 # https://sli.dev/custom/highlighters.html
@@ -18,26 +18,9 @@ info: |
   Learn more at [Sli.dev](https://sli.dev)
 ---
 
-# Welcome to Slidev
+# 守望先锋 ECS 架构浅析
 
-Presentation slides for developers
-
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
-
-<div class="abs-br m-6 flex gap-2">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub"
-    class="text-xl icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon-logo-github />
-  </a>
-</div>
-
+面向数据的编程模式
 
 <!--
 The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
@@ -45,17 +28,13 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 ---
 
-# What is Slidev?
+# 什么是 E.C.S 架构?
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
+Entity Component System
 
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - theme can be shared and used with npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embedding Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export into PDF, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - anything possible on a webpage
+- 📝 **Component**组件 - 其实就是数据，不包含任何内部方法
+- 🎨 **System**系统 - 纯粹的方法，不包含任何的私有 Field
+- 🧑‍💻 **Entity**实体 - 一个标识，通常是 id
 
 <br>
 <br>
@@ -81,11 +60,11 @@ h1 {
 
 ---
 
-# Navigation
+# 面向数据编程实例
 
 Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
 
-### Keyboard Shortcuts
+# UI = F(State)
 
 |     |     |
 | --- | --- |
@@ -103,48 +82,75 @@ Hover on the bottom-left corner to see the navigation's controls panel, [learn m
 <p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
 
 ---
-layout: image-right
-image: https://source.unsplash.com/collection/94734566/1920x1080
----
 
-# Code
+# 面向对象的优缺点
 
-Use code snippets and get the highlighting directly![^1]
+1. **过度封装** 会把一些复杂的问题分拆抽象成较简单的独立对象，通过对象的互相调用去实现方案，一个问题的数据集会被分散在不同的内存区域。
+2. **多态** 虚函数表是通过加入一次间接层来实现动态派送。但在调用的时候需要读取虚函数表，增加 cache miss 的可能性。
+3. **数据布局** 解决一个问题可能只需要很少的成员变量，但仍把整个对象载入缓存
 
-```ts {all|2|1-6|9|all}
-interface User {
-  id: number
-  firstName: string
-  lastName: string
-  role: string
-}
 
-function updateUser(id: number, update: User) {
-  const user = getUser(id)
-  const newUser = {...user, ...update}  
-  saveUser(id, newUser)
+```C
+struct Particle {
+  Vector3 position;
+  Vector4 velocity;
+  Vector4 color;
+  fload age;
+  // ...
 }
 ```
 
-<arrow v-click="3" x1="400" y1="420" x2="230" y2="330" color="#564" width="3" arrowSize="1" />
+https://zhuanlan.zhihu.com/p/92345645
 
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
+https://www.zhihu.com/question/20275578/answer/27046327
+
+
+---
+layout: image-right
+image: https://overwatch.nosdn.127.net/a/images/2020/3/19/0dbd2928584ecb92961b6432863114a0.png
+---
+
+# ECS 的优缺点
+
+<ul>
+<li class="ghost-good">数据由World统一管理，使用连续的内存布局，提升 CPU Cache 命中率</li>
+<li class="ghost-good">一个 System 并不同时操作所有 Component，可以多核与并行计算</li>
+<li class="ghost-good">占个位置</li>
+</ul>
+<br>
+<br>
+<ul>
+<li class="ghost-bad">新的心智模型，可读性不如面向对象的程序设计</li>
+<li class="ghost-bad">占个位置</li>
+<li class="ghost-bad">占个位置</li>
+</ul>
 
 <style>
-.footnotes-sep {
-  @apply mt-20 opacity-10;
+li::marker {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    text-indent: 0px !important;
+    text-align: start !important;
+    text-align-last: start !important;
 }
-.footnotes {
-  @apply text-sm opacity-75;
+.ghost-good {
+  color: #47d58a;
 }
-.footnote-backref {
-  display: none;
+.ghost-good::before {
+  background-image: url(https://aph.dodo.me/slides/ghost_upside.af01f1ab.png);
+}
+.ghost-bad {
+  color: #ff867f;
+}
+.ghost-bad::before {
+  background-image: url(https://aph.dodo.me/slides/ghost_downside.40a6de8f.png);
 }
 </style>
 
 ---
 
-# Components
+# ECS 的实际使用
 
 <div grid="~ cols-2 gap-4">
 <div>
@@ -179,7 +185,7 @@ Check out [the guides](https://sli.dev/builtin/components.html) for more.
 class: px-20
 ---
 
-# Themes
+# Snake Demo Code
 
 Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
 
@@ -210,7 +216,7 @@ check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
 preload: false
 ---
 
-# Animations
+# 对于实际项目的作用
 
 Animations are powered by [@vueuse/motion](https://motion.vueuse.org/).
 
@@ -284,7 +290,7 @@ const final = {
 
 ---
 
-# LaTeX
+# 参考
 
 LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
 
