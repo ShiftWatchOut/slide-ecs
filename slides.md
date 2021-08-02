@@ -64,6 +64,8 @@ h1 {
 
 Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
 
+---
+
 # UI = F(State)
 
 |     |     |
@@ -83,14 +85,14 @@ Hover on the bottom-left corner to see the navigation's controls panel, [learn m
 
 ---
 
-# 面向对象的优缺点
+# 为什么不用面向对象的设计
 
 1. **过度封装** 会把一些复杂的问题分拆抽象成较简单的独立对象，通过对象的互相调用去实现方案，一个问题的数据集会被分散在不同的内存区域。
 2. **多态** 虚函数表是通过加入一次间接层来实现动态派送。但在调用的时候需要读取虚函数表，增加 cache miss 的可能性。
-3. **数据布局** 解决一个问题可能只需要很少的成员变量，但仍把整个对象载入缓存
+3. **数据布局** 解决一个问题可能只需要很少的成员变量，但仍把整个对象载入缓存。[^1] [^2]
 
 
-```C
+```c
 struct Particle {
   Vector3 position;
   Vector4 velocity;
@@ -99,11 +101,23 @@ struct Particle {
   // ...
 }
 ```
+<h1 style="color: #e9e56f" v-click>继承不足以描述关系建模</h1>
 
-https://zhuanlan.zhihu.com/p/92345645
+[^1]: [面向对象编程的弊端是什么？](https://zhuanlan.zhihu.com/p/92345645)
 
-https://www.zhihu.com/question/20275578/answer/27046327
+[^2]: [为什么面向对象糟透了？](https://www.zhihu.com/question/20275578/answer/27046327)
 
+<style>
+.footnotes-sep {
+  @apply opacity-10;
+}
+.footnotes {
+  @apply text-sm opacity-75;
+}
+.footnote-backref {
+  display: none;
+}
+</style>
 
 ---
 layout: image-right
@@ -115,14 +129,13 @@ image: https://overwatch.nosdn.127.net/a/images/2020/3/19/0dbd2928584ecb92961b64
 <ul>
 <li class="ghost-good">数据由World统一管理，使用连续的内存布局，提升 CPU Cache 命中率</li>
 <li class="ghost-good">一个 System 并不同时操作所有 Component，可以多核与并行计算</li>
-<li class="ghost-good">占个位置</li>
+<li class="ghost-good">擅长处理多模型场景</li>
 </ul>
 <br>
 <br>
 <ul>
 <li class="ghost-bad">新的心智模型，可读性不如面向对象的程序设计</li>
-<li class="ghost-bad">占个位置</li>
-<li class="ghost-bad">占个位置</li>
+<li class="ghost-bad">从已有项目迁移困难</li>
 </ul>
 
 <style>
@@ -134,8 +147,21 @@ li::marker {
     text-align: start !important;
     text-align-last: start !important;
 }
+li {
+  position: relative;
+}
 .ghost-good {
   color: #47d58a;
+}
+.ghost-good::before, .ghost-bad::before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  left: -30px;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .ghost-good::before {
   background-image: url(https://aph.dodo.me/slides/ghost_upside.af01f1ab.png);
@@ -150,35 +176,14 @@ li::marker {
 
 ---
 
-# ECS 的实际使用
+# 谁在使用 ECS
 
-<div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
+框架|简介|适用语言|网站
+--|--|--|--
+**Entitas** | Unity 社区插件 | `C#` | [Github Repo](https://github.com/sschmid/Entitas-CSharp)
+**Bevy** | 独立游戏引擎 | `Rust` | [Site](https://bevyengine.org/)
+**ECSY** | Mozilla Mixed Reality 团队开源 | `JS` | [Document](https://ecsy.io/docs)
+**Eva.js** | 淘系互动前端团队 | `JS` | [官网](https://eva-engine.gitee.io/#/)
 
 
 ---
