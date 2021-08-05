@@ -32,9 +32,9 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 Entity Component System
 
-- 🧑 **Entity** 实体 - 一个标识，通常是 id ，可挂载上多个 Component
-- 📝 **Component** 组件 - 其实就是数据，附着在 Entity 上，不包含任何内部方法
-- 🎨 **System** 系统 - 纯粹的方法，不包含任何的私有 Field。修改 Component，处理 Entity
+- 🧑 **Entity** (实体) - 一个标识，通常是 id ，可挂载上多个 Component
+- 📝 **Component** (组件) - 其实就是数据，附着在 Entity 上，不包含任何内部方法
+- 🎨 **System** (系统) - 纯粹的方法，不包含任何的私有 Field。修改 Component，处理 Entity
 - 🧮 **Query** - 系统用于过滤它需要的组件和实体
 - 🛠 **World** - 管理以上所有
 
@@ -42,8 +42,8 @@ Entity Component System
 
 ```mermaid {theme: 'neutral', scale: 0.8}
 graph LR;
-    World--Manage-->Systems;
-    World--Manage-->Entities--Attach-->ACompont & BComponent & CComponent;
+    a{World}--管理-->b[\Systems\]-->d[\SystemA\] & f[\SystemB\];
+    a--管理-->c[/Entities\]--持有-->e[(Components)]-->g[(ComponentA)] & h[(ComponentB)];
 
 ```
 
@@ -63,31 +63,6 @@ h1 {
   -moz-text-fill-color: transparent;
 }
 </style>
-
----
-
-# 面向数据编程实例
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
-
----
-
-# UI = F(State)
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
 
 ---
 
