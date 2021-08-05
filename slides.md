@@ -32,14 +32,20 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 Entity Component System
 
-- 📝 **Component**组件 - 其实就是数据，不包含任何内部方法
-- 🎨 **System**系统 - 纯粹的方法，不包含任何的私有 Field
-- 🧑‍💻 **Entity**实体 - 一个标识，通常是 id
+- 🧑 **Entity** 实体 - 一个标识，通常是 id ，可挂载上多个 Component
+- 📝 **Component** 组件 - 其实就是数据，附着在 Entity 上，不包含任何内部方法
+- 🎨 **System** 系统 - 纯粹的方法，不包含任何的私有 Field。修改 Component，处理 Entity
+- 🧮 **Query** - 系统用于过滤它需要的组件和实体
+- 🛠 **World** - 管理以上所有
 
 <br>
-<br>
 
-Read more about [Why Slidev?](https://sli.dev/guide/why)
+```mermaid {theme: 'neutral', scale: 0.8}
+graph LR;
+    World--Manage-->Systems;
+    World--Manage-->Entities--Attach-->ACompont & BComponent & CComponent;
+
+```
 
 <!--
 You can have `style` tag in markdown to override the style for the current page.
