@@ -3,7 +3,7 @@
 theme: seriph
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: https://overwatch.nosdn.127.net/1/assets/img/pages/community/heroes-among-us/header-tablet.jpg
+background: /OverWatch.jpg
 # apply any windi css classes to the current slide
 class: 'text-center'
 # https://sli.dev/custom/highlighters.html
@@ -66,6 +66,29 @@ h1 {
 
 ---
 
+# GDC [^1] 视频截图 (1)
+
+![c1](/Component1.png)
+
+[^1]: [Game Developer Conference](https://www.youtube.com/watch?v=W3aieHjyNvw&t=1501s)
+
+---
+
+# GDC 视频截图 (2)
+
+![c2](/Component2.png)
+---
+
+# GDC 视频截图 (3)
+
+![e1](/Entity1.png)
+---
+
+# GDC 视频截图 (4)
+
+![e2](/Entity2.png)
+---
+
 # 为什么不用面向对象的设计
 
 1. **过度封装** 会把一些复杂的问题分拆抽象成较简单的独立对象，通过对象的互相调用去实现方案，一个问题的数据集会被分散在不同的内存区域。
@@ -102,7 +125,7 @@ struct Particle {
 
 ---
 layout: image-right
-image: https://overwatch.nosdn.127.net/a/images/2020/3/19/0dbd2928584ecb92961b6432863114a0.png
+image: /Echo.png
 ---
 
 # ECS 的优缺点
