@@ -350,4 +350,8 @@ layout: center
 
 ---
 
-# UI = Func( State )
+```mermaid
+graph TD
+A[UI = Func State] --> B{{UI_1 = Fun State_1 }} --> E[Vue DevTool's TimeTravel];
+A --> C{{UI_2 = Fun_2 State}} --> F[ReactDOM, React-Art, React Native];
+```
