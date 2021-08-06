@@ -346,6 +346,8 @@ layout: center
 
 # 简单的例子
 
+张鑫旭 [js面向数据编程(DOP)一点分享](https://www.zhangxinxu.com/wordpress/2011/01/js%e9%9d%a2%e5%90%91%e6%95%b0%e6%8d%ae%e7%bc%96%e7%a8%8bdop%e4%b8%80%e7%82%b9%e5%88%86%e4%ba%ab/?shrink=1)
+
 ---
 
 # UI = Func( State )
