@@ -61,7 +61,7 @@ h1 {
 
 ---
 
-# GDC [^1] 视频截图 (1)
+<!-- # GDC [^1] 视频截图 (1) -->
 
 ![c1](/Component1.png)
 
@@ -69,17 +69,17 @@ h1 {
 
 ---
 
-# GDC 视频截图 (2)
+<!-- # GDC 视频截图 (2) -->
 
 ![c2](/Component2.png)
 ---
 
-# GDC 视频截图 (3)
+<!-- # GDC 视频截图 (3) -->
 
 ![e1](/Entity1.png)
 ---
 
-# GDC 视频截图 (4)
+<!-- # GDC 视频截图 (4) -->
 
 ![e2](/Entity2.png)
 ---
@@ -100,7 +100,7 @@ struct Particle {
   // ...
 }
 ```
-<h1 style="color: #e9e56f" v-click>继承不足以描述关系建模</h1>
+<h1 style="color: orange" v-click>继承不足以描述关系建模</h1>
 
 [^1]: [面向对象编程的弊端是什么？](https://zhuanlan.zhihu.com/p/92345645)
 
@@ -141,6 +141,13 @@ image: /Echo.png
 <ul>
 <li class="ghost-bad">新的心智模型，可读性不如面向对象的程序设计</li>
 <li class="ghost-bad">不擅长构建一般的UI</li>
+</ul>
+
+<hr/>
+
+<ul v-click>
+  <li><strong>面向对象</strong>我是什么---我是子弹对象，我是炸弹对象</li>
+  <li><strong>面向数据</strong>我有什么---我有移动组件，我有爆炸组件</li>
 </ul>
 
 <style>
