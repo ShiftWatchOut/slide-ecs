@@ -201,14 +201,134 @@ class: px-20
 - ecsy-three 官方仓库 [https://github.com/ecsyjs/ecsy-three](https://github.com/ecsyjs/ecsy-three)
 
 ---
-preload: false
+layout: two-cols
 ---
 
-# 对于实际项目的作用
-
-2D架构:
-```mermaid {theme: 'neutral', scale: 0.8}
+- 之前设计工具 2D 架构
+```mermaid
+classDiagram
+  Movie<|--Actor
+  class Movie {
+    +Array<Actor> actors
+    -select()
+    -delete()
+    -modify()
+  }
+  class Actor{
+    +position
+    +scale
+    +rotation
+    +sprite
+    -onMouseMove()
+    -onMouseIn()
+    -onMouseOut()
+    -onMouseDown()
+    -onMouseOut()
+    -destructor()
+    -update()
+  }
 ```
+
+::right::
+
+- 不同的模型继承自Actor
+```mermaid
+classDiagram
+  Actor<|--Decoration
+  Actor<|--GroupModel
+  Actor<|--Door
+  Actor<|--Wall
+```
+---
+layout: two-cols
+---
+
+- 当前设计工具 2D 架构
+```mermaid
+classDiagram
+  Movie<|--Actor
+  class Movie {
+    +Array<Actor> actors
+    -select()
+    -delete()
+    -modify()
+  }
+  class Actor{
+    +position
+    +scale
+    +rotation
+    +sprite
+  }
+```
+
+::right::
+
+- actor 内部方法几乎弃用，由不同的外部类来管理 actor 内部数据
+```mermaid
+classDiagram
+  D2ObjectSelect --|> Actor
+  D2ObjectHover --|> Actor
+  D2ObjectMove --|> Actor
+  Actor <|-- D2DrawWall
+  Actor <|-- D2ControlBar
+  Actor <|-- D2ObjectAdd
+```
+
+---
+layout: two-cols
+---
+
+
+::default::
+# 待解决的问题
+<ul>
+  <li class="ghost-bad">2/3D渲染不同步</li>
+  <li class="ghost-bad">2/3D功能不同步</li>
+</ul>
+::right::
+
+# 解决方案
+<ul>
+  <li class="ghost-good">不再把2D、3D当作独立的对象，而是同一个 Word 下不同的 System</li>
+  <li class="ghost-good">逻辑交给其他 System，2/3D 只负责忠实地渲染</li>
+</ul>
+
+<style>
+li::marker {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    text-indent: 0px !important;
+    text-align: start !important;
+    text-align-last: start !important;
+}
+li {
+  position: relative;
+}
+.ghost-good {
+  color: #47d58a;
+}
+.ghost-good::before, .ghost-bad::before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  left: -30px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.ghost-good::before {
+  background-image: url(https://aph.dodo.me/slides/ghost_upside.af01f1ab.png);
+}
+.ghost-bad {
+  color: #ff867f;
+}
+.ghost-bad::before {
+  background-image: url(https://aph.dodo.me/slides/ghost_downside.40a6de8f.png);
+}
+</style>
+
 
 ---
 layout: center
